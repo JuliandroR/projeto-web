@@ -32,7 +32,7 @@ export default function SignIn({ history }) {
         login(token, userData);
       }
 
-      history.push("/");
+      history.push("/home");
     } catch (err) {
       toast.error("Email ou senha inválido!");
     }
