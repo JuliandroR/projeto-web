@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const cors = require("cors");
+
 class App {
   constructor() {
     this.express = express();
+    this.express.use(cors());
     this.isDev = process.env.NODE_ENV !== "production";
 
     this.database();
@@ -12,10 +15,10 @@ class App {
   }
 
   database() {
-    mongoose.connect("mongodb://localhost:27017/marketdb", {
-      useCreateIndex: true,
+    mongoose.connect('mongodb+srv://juliandro:juliandro@cluster0-rfl8k.mongodb.net/test?retryWrites=true', {
+      useNewUrlParser: true,
       useUnifiedTopology: true,
-      useNewUrlParser: true
+      useCreateIndex: true
     });
   }
 
