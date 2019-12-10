@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import api from "../../services/api";
 
-// import { Container } from './styles';
+import Navigation from "../../components/Navigation";
+import Ads from "../Ads";
+import { Container } from "./styles";
 
-
-let data = []
+let data = [];
 
 const ContainerCards = () => (
   <div>
@@ -41,10 +42,19 @@ export default class Home extends Component {
   loadAds = async () => {
     const response = await api.get("/ads");
     console.log(response);
-    data = response.data
+    data = response.data;
   };
 
   render() {
-    return <div>{ContainerCards()}</div>;
+    return (
+      <div>
+        <Container>
+          <Navigation />
+          <Ads />
+        </Container>
+
+        {ContainerCards()}
+      </div>
+    );
   }
 }

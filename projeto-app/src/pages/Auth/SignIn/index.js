@@ -21,9 +21,7 @@ export default function SignIn({ history }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Cheguei aqui");
     try {
-      console.log("Cheguei aqui");
       const response = await api.post(`/sessions`, user);
 
       const { token, user: userData } = response.data;
