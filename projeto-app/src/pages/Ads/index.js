@@ -39,6 +39,12 @@ export default function Anuncio({ history }) {
     </div>;
   };
 
+export default function Anuncio({ history }) {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    history.push("/ads");
+  }
+
   return (
     <Container>
       <header>
@@ -48,27 +54,5 @@ export default function Anuncio({ history }) {
         </div>
       </header>
       {buildAds()}
-
-      {/* <Ads>
-        <p>Títilo</p>
-        <p>Descrição</p>
-        <p>Preço</p>
-        <p>Autor</p>
-      </Ads>
-
-      <Ads>
-        <p>Títilo</p>
-        <p>Descrição</p>
-        <p>Preço</p>
-        <p>Autor</p>
-      </Ads>
-
-      <Ads>
-        <p>Títilo</p>
-        <p>Descrição</p>
-        <p>Preço</p>
-        <p>Autor</p>
-      </Ads> */}
-    </Container>
   );
 }
