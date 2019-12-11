@@ -1,87 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
-import { login } from "../../services/auth";
 
 import Button from "../../styles/components/Button";
-import { Container, SignForm } from "./styles";
+import { Container, SignForm, Teste } from "./styles";
+import Navigation from "../../components/Navigation";
 
-export default function SignUp({ history }) {
-  const [loading, setLoading] = useState("disabled");
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
-
-  useEffect(() => {
-    const isEnabled = () => {
-      return user.email.length > 5 && user.password.length >= 6
-        ? setLoading("")
-        : setLoading("disabled");
-    };
-    isEnabled();
-  }, [user]);
+export default function NewAds({ history }) {
+  const [ads, setAds] = useState({ title: "", description: "", price: "" });
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await api.post(`/users`, user);
-
-      const userCreate = { email: user.email, password: user.password };
-
-      const response = await api.post(`/sessions`, userCreate);
-
-      const { token, user: userData } = response.data;
-
-      if (token) {
-        login(token, userData);
-      }
+      await api.post(`/ads`, ads);
 
       history.push("/home");
     } catch (err) {
-      toast.error("Email ou senha inválido!");
+      toast.error("Erro ao cadastrar anúncio!");
     }
   }
 
   function handleInputChange(e) {
     const { id, value } = e.target;
-    setUser({
-      ...user,
+    setAds({
+      ...ads,
       [id]: value
     });
   }
 
   return (
     <Container>
-      <SignForm onSubmit={handleSubmit}>
-        <h1>Cadastro de anúncio</h1>
+      <Navigation />
+      <Teste>
+        <SignForm onSubmit={handleSubmit}>
+          <h1>Cadastro de anúncio</h1>
 
-        <span>TÍTULO</span>
-        <input
-          id="title"
-          value={ads.title}
-          required
-          onChange={handleInputChange}
-        />
+          <span>TÍTULO</span>
+          <input
+            id="title"
+            value={ads.title}
+            required
+            onChange={handleInputChange}
+          />
 
-        <span>DESCRIÇÃO</span>
-        <input
-          id="description"
-          value={ads.description}
-          required
-          onChange={handleInputChange}
-        />
+          <span>DESCRIÇÃO</span>
+          <input
+            id="description"
+            value={ads.description}
+            required
+            onChange={handleInputChange}
+          />
 
-        <span>PREÇO</span>
-        <input
-          id="price"
-          type="number"
-          value={ads.price}
-          required
-          onChange={handleInputChange}
-        />
+          <span>PREÇO</span>
+          <input
+            id="price"
+            type="number"
+            value={ads.price}
+            required
+            onChange={handleInputChange}
+          />
 
-        <Button size="big" onClick={handleSubmit} type="submit">
-          Cadastrar
-        </Button>
-      </SignForm>
+          <Button size="big" onClick={handleSubmit} type="submit">
+            Cadastrar
+          </Button>
+        </SignForm>
+      </Teste>
     </Container>
   );
 }

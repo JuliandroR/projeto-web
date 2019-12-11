@@ -15,7 +15,7 @@ class App {
   }
 
   database() {
-    mongoose.connect("mongodb://localhost:27017/cesta-basica", {
+    mongoose.connect('mongodb+srv://juliandro:juliandro@cluster0-rfl8k.mongodb.net/test?retryWrites=true', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true

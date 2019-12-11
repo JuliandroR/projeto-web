@@ -2,37 +2,73 @@ import React from "react";
 
 import { Container, Ads } from "./styles";
 import Button from "../../styles/components/Button";
+import api from "../../services/api";
 
-const Anuncio = () => (
-  <Container>
-    <header>
-      <h1>Anúncios</h1>
-      <div>
-        <Button onClick={() => {}}>+ Novo</Button>
-      </div>
-    </header>
+let data = []
 
-    <Ads>
-      <p>Títilo</p>
-      <p>Descrição</p>
-      <p>Preço</p>
-      <p>Autor</p>
-    </Ads>
+export default function Anuncio({ history }) {
+  console.log(history);
 
-    <Ads>
-      <p>Títilo</p>
-      <p>Descrição</p>
-      <p>Preço</p>
-      <p>Autor</p>
-    </Ads>
+  async function handleSubmit(e) {
+    // e.preventDefault();
+    history.push("/ads");
+  }
 
-    <Ads>
-      <p>Títilo</p>
-      <p>Descrição</p>
-      <p>Preço</p>
-      <p>Autor</p>
-    </Ads>
-  </Container>
-);
+  const componentDidMount = () => {
+    this.loadAds();
+  }
 
-export default Anuncio;
+  const loadAds = async () => {
+    const response = await api.get("/ads");
+    console.log(response);
+    data = response.data;
+  };
+
+  const buildAds = () => {
+    <div>
+      {data.map(item => {
+        return (
+          <Ads>
+            <p>Títilo: {item.title}</p>
+            <p>Descrição: {item.description}</p>
+            <p>Autor: {item.author}</p>
+            <p>Preço: {item.price}</p>
+          </Ads>
+        );
+      })}
+    </div>;
+  };
+
+  return (
+    <Container>
+      <header>
+        <h1>Anúncios</h1>
+        <div>
+          <Button onClick={handleSubmit}>+ Novo</Button>
+        </div>
+      </header>
+      {buildAds()}
+
+      {/* <Ads>
+        <p>Títilo</p>
+        <p>Descrição</p>
+        <p>Preço</p>
+        <p>Autor</p>
+      </Ads>
+
+      <Ads>
+        <p>Títilo</p>
+        <p>Descrição</p>
+        <p>Preço</p>
+        <p>Autor</p>
+      </Ads>
+
+      <Ads>
+        <p>Títilo</p>
+        <p>Descrição</p>
+        <p>Preço</p>
+        <p>Autor</p>
+      </Ads> */}
+    </Container>
+  );
+}
